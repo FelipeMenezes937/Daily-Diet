@@ -1,10 +1,11 @@
 import fastify from "fastify";
 import { config } from "dotenv";
+import { db } from "./database";
 
 export const app = fastify()
-let cont: number = 0
-app.get('/daily', (request, res) => { // rota pra criar usuário
-    console.log(`${cont}) rota get /daily`)
-    cont++
-    return res.code(200).send()// tava faltando o .send()
+
+app.get('/daily', async (request, res) => { // rota pra criar usuário
+     const tables = await db('sqlite_schema').select('*')
+    
+    return tables 
 })
